@@ -15,11 +15,11 @@ private_key = phe.PaillierPrivateKey(public_key=public_key, p=int("1520960334709
 keyring = phe.PaillierPrivateKeyring()
 keyring.add(private_key)
 
-print(public_key.n)
-print("mu : "+str(private_key.p)+"\nlambda : "+str(private_key.q))
+#print(public_key.n)
+#print("mu : "+str(private_key.p)+"\nlambda : "+str(private_key.q))
 
 
-"""
+
 random_key = b'ZV9+IEpn4GNSX/06RqWUMJU2gwfoBOswlaHlp9Imt+4='
 cipher = OPE(random_key)
 
@@ -34,9 +34,12 @@ def evoieDonnee (clair):
 
 
 
-chiffre1000 = cipher.encrypt(1000)
-chiffre2000 = cipher.encrypt(2000)
-chiffre500 = cipher.encrypt(500)
+chiffre5 = cipher.encrypt(5)
+chiffre15 = cipher.encrypt(15)
+chiffre20 = cipher.encrypt(32500)
+
+print(str(chiffre5)+" : "+str(chiffre15)+" : "+str(chiffre20))
+
 """
 
 
@@ -56,7 +59,7 @@ print("Déhiffrement :1500 : "+str(private_key.decrypt(chiffrePaillier1000plus50
 
 private_key.decrypt(chiffrePaillier1000plus500)
 
-"""
+
 chiffre1000 = cipher.encrypt(1000)
 chiffre2000 = cipher.encrypt(2000)
 chiffre500 = cipher.encrypt(500)
