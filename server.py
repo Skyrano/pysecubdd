@@ -32,7 +32,7 @@ def parseur(string):
 	
 	operation = array[4] #on check quelle est l'opération voulue et on effecute celle-ci
 	if operation == "insert" and len(array) == 10: #la vérification de la taille permet de vérifier qu'il n'y ait au moins pas d'erreur dans le nombre d'arguments
-		name = array[5]
+		name = array[5]  							#l'insert en lui même est assez classique, mais les données qui transitent sont ici chiffrées par le client et ainsi elle ne sont jamais connues du serveur, qui va ensuite pouvoir les utiliser quand même comme on le verra
 		pub_key = array[6]
 		ciphertextPaillier = array[7]
 		expoPaillier = array[8]
@@ -51,7 +51,7 @@ def parseur(string):
 		for x in mycursor:
 			string = name+"£"+str(x[0])+"£"+str(x[1])+"£"+str(x[2])+"£"+str(x[3])
 		return string
-	elif operation == "compute" and len(array) == 8: #on fait uen opération sur les valeurs
+	elif operation == "compute" and len(array) == 8: #on fait une opération sur les valeurs
 		name1 = array[5]
 		option = array[6]
 		name2 = array[7]
@@ -80,11 +80,10 @@ def parseur(string):
 			
 			if pub_key1 != pub_key2: #si les clés ne sont pas les mêmes (nombres chiffrés avec la même clé privée) on ne peut pas additionner les nombres
 				return "Error different public key"
-			encryptedNumber1 = paillierEncryptedNumber(add_number1, add_exposant1, pub_key1)
-			encryptedNumber2 = paillierEncryptedNumber(add_number2, add_exposant2, pub_key2)
+			encryptedNumber1 = paillierEncryptedNumber(add_number1, add_exposant1, pub_key1) #on recréé un nombre utilisable à partir des données de la base qui ont été séparées en 2 nombres
+			encryptedNumber2 = paillierEncryptedNumber(add_number2, add_exposant2, pub_key2) #/!\ on ne déchiffre pas ici les nombres (on a de toutes façons que la clé publique de disponible), on recréé simplement des nombres additionnables sous la bonne forme en combinant les informations stockées
 
-			res = encryptedNumber1 + encryptedNumber2
-
+			res = encryptedNumber1 + encryptedNumber2 #on peut alors calculer le résultat de manière simple, nombre donc le déchiffrement donne le résultat correct
 			return name1+"£"+name2+"£"+str(res.ciphertext())+"£"+str(res.exponent)+"£"+str(pub_key1)
 
 		elif option == "order": #on compare les valeurs
@@ -102,7 +101,7 @@ def parseur(string):
 			for x in mycursor:
 				order_number2 = str(x[0])
 
-			return name1+"£"+name2+"£"+str(order_number1 > order_number2)
+			return name1+"£"+name2+"£"+str(order_number1 > order_number2) #on peut comparer les valeurs naturellement avec ">" grâce au chiffrement utilisé préservant l'ordre
 	elif operation == "query" and len(array) == 6: #permet de faire une requête libre dont le résultat est concaténé dans un string et renvoyé au client
 		requete = array[5]
 		mycursor.execute(requete)
