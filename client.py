@@ -164,14 +164,16 @@ insert3 = "root£w@VcQ98*a9FZz3£tp2021_rameau£users£insert£Bob£"+envoieDonn
 select1 = "root£w@VcQ98*a9FZz3£tp2021_rameau£users£select£Xavier"
 
 #Création de 2 requètes d'addidtion
-add1 = "root£w@VcQ98*a9FZz3£tp2021_rameau£users£compute£Xavier£add£Bob" #ajoute le chiffré de Xavier au chiffré de bob, puis renvoie le résultat
+add1 = "root£w@VcQ98*a9FZz3£tp2021_rameau£users£compute£Xavier£add£Bob" #Ajoute le chiffré de Xavier au chiffré de bob, puis renvoie le résultat
 add2 = "root£w@VcQ98*a9FZz3£tp2021_rameau£users£compute£Nathalie£add£Bob"
 
 #Création de 2 requètes d'order
 order1 = "root£w@VcQ98*a9FZz3£tp2021_rameau£users£compute£Nathalie£order£Bob" #Compare les chiffrés de Nathalie et Bob et renvoie le résultat
 order2 = "root£w@VcQ98*a9FZz3£tp2021_rameau£users£compute£Bob£order£Nathalie"
 
-#Création de 1 requète query standard
+#Création de 1 requête query standard
+#Selectionne les noms des lignes qui on un nombre clair plus grand ou égal à celui de Nathalie
+#Nous pouvons par exemple dire que nous voulons toutes les personnes ayant plus ou autant d'argent sur leur compte que Nathalie, sans savoir combien précisémment ils ont sur leur compte
 specialQuery1 = "SELECT name FROM users WHERE order_number >= ((SELECT order_number FROM users WHERE name = 'Nathalie') LIMIT 1)"
 query1 = "root£w@VcQ98*a9FZz3£tp2021_rameau£users£query£"+specialQuery1
 
